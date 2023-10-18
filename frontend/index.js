@@ -76,7 +76,6 @@ async function moduleProject4() {
       dropdown.disabled = false;
       info.textContent = ""
       widget.style.display = "block"
-      
     } catch (error) {
       console.error("Error: ", error);
     }
