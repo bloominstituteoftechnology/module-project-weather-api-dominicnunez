@@ -28,17 +28,15 @@ async function moduleProject4() {
     
     try {
       const response = await axios.get(cityURL);
-      console.log("Reponse Data: ", response.data)
     
       let data = response.data;
       let current = data.current
       let forecast = data.forecast.daily
       let location = data.location
-      // let emojiMap = descriptions.find((e) => e[0] === current.weather_description)
 
-      const emojiMap = description => {
+      const getDescriptionEmoji = description => {
         const weatherMap = descriptions.find((e) => e[0] === description);
-        return weatherMap ? weatherMap[1] : "Not found";
+        return weatherMap ? weatherMap[1] : "Not Found";
       }
 
       const getDayOfWeek = dateString => {
@@ -62,18 +60,23 @@ async function moduleProject4() {
       precipitation.textContent = "Precipitation: " + (current.precipitation_probability * 100) + "%"
       humidity.textContent = "Humidity: " + current.humidity + "%"
       wind.textContent = "Wind: " + current.wind_speed + "m/s"
-      todayDescription.textContent = emojiMap(current.weather_description)
+      todayDescription.textContent = getDescriptionEmoji(current.weather_description)
       city.textContent = location.city
       country.textContent = location.country
 
-      console.log(forecast, nextDays)
-      for (let i of forecast) {
-        console.log(i)
+      for (let i in forecast) {
+        let future = forecast[i]
+        let nextDay = nextDays[i]
+        nextDay.children[0].textContent = getDayOfWeek(future.date)
+        nextDay.children[1].textContent = getDescriptionEmoji(future.weather_description)
+        nextDay.children[2].textContent = future.temperature_min + "°/" + future.temperature_max + "°"
+        nextDay.children[3].textContent = "Precipitation: " + (future.precipitation_probability * 100) + "%"
       }
 
       dropdown.disabled = false;
       info.textContent = ""
       widget.style.display = "block"
+      
     } catch (error) {
       console.error("Error: ", error);
     }
