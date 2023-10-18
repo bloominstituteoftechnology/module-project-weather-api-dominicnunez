@@ -73,16 +73,11 @@ async function moduleProject4() {
       // }
 
       forecast.forEach((future) => {
-        let div = nextDays[forecast.indexOf(future)]
-        let day = div.children[0]
-        let emoji = div.children[1]
-        let minMax = div.children[2]
-        let precip = div.children[3]
-
-        day.textContent = getDayOfWeek(future.date)
-        emoji.textContent = getDescriptionEmoji(future.weather_description)
-        minMax.textContent = future.temperature_min + "°/" + future.temperature_max + "°"
-        precip.textContent = "Precipitation: " + (future.precipitation_probability * 100) + "%"
+        let nextDay = nextDays[forecast.indexOf(future)]
+        nextDay.children[0].textContent = getDayOfWeek(future.date)
+        nextDay.children[1].textContent = getDescriptionEmoji(future.weather_description)
+        nextDay.children[2].textContent = future.temperature_min + "°/" + future.temperature_max + "°"
+        nextDay.children[3].textContent = "Precipitation: " + (future.precipitation_probability * 100) + "%"
       })
 
       dropdown.disabled = false;
