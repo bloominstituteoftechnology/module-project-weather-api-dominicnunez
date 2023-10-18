@@ -17,6 +17,8 @@ async function moduleProject4() {
   // 👉 Tasks 1 - 5 go here
   const dropdown = document.getElementById('citySelect')
   const widget = document.getElementById('weatherWidget')
+  widget.style.display = "none"
+
   dropdown.addEventListener('change', async () => {
     // let formattedCity = dropdown.value.replace(" ", "+")
     dropdown.disabled = true;
@@ -28,7 +30,7 @@ async function moduleProject4() {
     
     try {
       const response = await axios.get(cityURL);
-    
+
       let data = response.data;
       let current = data.current
       let forecast = data.forecast.daily
@@ -67,7 +69,7 @@ async function moduleProject4() {
       for (let i in forecast) {
         let future = forecast[i]
         let nextDay = nextDays[i]
-        nextDay.children[0].textContent = getDayOfWeek(future.date)
+        nextDay.children[0].innerHTML = getDayOfWeek(future.date)
         nextDay.children[1].textContent = getDescriptionEmoji(future.weather_description)
         nextDay.children[2].textContent = future.temperature_min + "°/" + future.temperature_max + "°"
         nextDay.children[3].textContent = "Precipitation: " + (future.precipitation_probability * 100) + "%"
